@@ -4,7 +4,7 @@ import app from "./app.js";
 config()
 
 const PORT = process.env.PORT
-app.listen(prompt, () => {
+app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
     
 })
