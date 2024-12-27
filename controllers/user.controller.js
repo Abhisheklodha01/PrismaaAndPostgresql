@@ -83,3 +83,23 @@ export const getUsers = async (req, res) => {
         })
    }
 }
+
+export const getUserByID = async (req, res) => {
+    const id = req.params.id
+  try {
+    const user = await prisma.user.findFirst({
+        where:{
+            id:Number(id)
+        }
+    })
+    return res.status(200).json({
+     message: "users find successfully",
+     user
+    })
+  } catch (error) {
+     return res.status(500).json({
+            message: "Internal server error",
+            error
+        })
+   }
+}
