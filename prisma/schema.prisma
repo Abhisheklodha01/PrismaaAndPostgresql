@@ -13,11 +13,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
-  password String
+  id         Int       @id @default(autoincrement())
+  name       String
+  email      String    @unique
+  password   String
+  post       Post[]
+  comment    Comment[]
+  created_at DateTime  @default(now())
+}
+
+model Post {
+  id            Int       @id @default(autoincrement())
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId        Int
+  title         String
+  description   String
+  comment_count BigInt    @default(0)
+  comment       Comment[]
+  created_at    DateTime  @default(now())
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     Int
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postId     Int
+  comment    String
   created_at DateTime @default(now())
 }
