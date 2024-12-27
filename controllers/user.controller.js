@@ -69,3 +69,17 @@ export const forgotPassword = async (req, res) => {
         })
     }
 }
+
+export const getUsers = async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({})
+    return res.status(200).json({
+     message: "users find successfully",
+     users
+    })
+  } catch (error) {
+     return res.status(500).json({
+            message: "Internal server error"
+        })
+   }
+}
