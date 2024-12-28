@@ -40,6 +40,14 @@ export const getPosts = async (req, res) => {
                     }
                 }
             }
+        },
+        where:{
+            comment_count:{
+                gt:0
+            },
+        },
+        orderBy:{
+            id:"desc"
         }
       })
       return res.status(200).json({
@@ -70,7 +78,7 @@ export const getPostByID = async (req, res) => {
                      }
                 }
             }
-        }
+        },
     })
     return res.status(200).json({
      message: "post find successfully",
