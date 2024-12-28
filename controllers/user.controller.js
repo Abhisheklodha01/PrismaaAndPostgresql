@@ -72,9 +72,28 @@ export const forgotPassword = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await prisma.user.findMany({})
+    const users = await prisma.user.findMany({
+        // include: {
+        //     post:{
+        //         select:{
+        //             title:true,
+        //             description:true,
+        //             comment_count:true,
+        //             id:true
+        //         }
+        //     }
+        // }
+        select:{
+            _count:{
+                select:{
+                    post:true,
+                    comment:true
+                }
+            }
+        }
+    })
     return res.status(200).json({
-     message: "users find successfully",
+     message: "users and post find successfully",
      users
     })
   } catch (error) {
