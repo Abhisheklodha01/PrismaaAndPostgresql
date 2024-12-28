@@ -29,7 +29,19 @@ export const createPost = async (req, res) => {
 
 export const getPosts = async (req, res) => {
     try {
-      const posts = await prisma.post.findMany({})
+      const posts = await prisma.post.findMany({
+        include:{
+            comment:{
+                include:{
+                    user:{
+                       select:{
+                        name:true
+                       }
+                    }
+                }
+            }
+        }
+      })
       return res.status(200).json({
        message: "Posts find successfully",
        posts
@@ -47,6 +59,17 @@ export const getPostByID = async (req, res) => {
     const user = await prisma.post.findFirst({
         where:{
             id:Number(id)
+        },
+        include:{
+            comment:{
+                include:{
+                    user:{
+                        select:{
+                         name:true
+                        }
+                     }
+                }
+            }
         }
     })
     return res.status(200).json({
