@@ -29,7 +29,7 @@ model Post {
   userId        Int
   title         String
   description   String
-  comment_count BigInt    @default(0)
+  comment_count Int    @default(0)
   comment       Comment[]
   created_at    DateTime  @default(now())
 }
